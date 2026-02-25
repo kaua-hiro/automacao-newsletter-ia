@@ -1,5 +1,4 @@
-Aqui está o README refatorado com melhorias na estrutura, clareza e profissionalismo:
-markdown# 🤖 Automação de Newsletter Corporativa: IA & Retalho
+# 🤖 Automação de Newsletter Corporativa: IA & Retalho
 
 Sistema de automação backend para curadoria e distribuição de newsletters corporativas sobre Inteligência Artificial, Microsoft Copilot e Tecnologia no Retalho/Moda.
 
