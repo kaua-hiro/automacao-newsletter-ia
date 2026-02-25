@@ -18,7 +18,6 @@ def buscar_noticias(tema, quantidade=3):
     return noticias
 
 def montar_corpo_email(noticias_copilot, noticias_varejo):
-    """Monta o esqueleto da newsletter em formato HTML."""
     html = """
     <html>
       <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: auto;">
@@ -52,7 +51,6 @@ def montar_corpo_email(noticias_copilot, noticias_varejo):
     return html
 
 def enviar_email_via_api(url_webhook, destinatario, assunto, corpo_html):
-    """Envia os dados em JSON para o Power Automate fazer o disparo."""
     payload = {
         "destinatario": destinatario,
         "assunto": assunto,
@@ -62,10 +60,8 @@ def enviar_email_via_api(url_webhook, destinatario, assunto, corpo_html):
     print("Disparando dados para a API do Power Automate...")
     
     try:
-        # Fazendo a requisição POST para a sua URL
         response = requests.post(url_webhook, json=payload)
-        
-        # O Power Automate geralmente retorna 202 (Accepted) quando recebe tudo certo
+
         if response.status_code in [200, 202]:
             print(f"✅ Sucesso! E-mail enviado para a caixa de: {destinatario}")
         else:
@@ -74,10 +70,6 @@ def enviar_email_via_api(url_webhook, destinatario, assunto, corpo_html):
     except Exception as e:
         print(f"❌ Erro de conexão com a rede: {e}")
 
-# ==========================================
-# EXECUÇÃO DO FLUXO
-# ==========================================
-
 print("Iniciando coleta de dados (RSS)...")
 noticias_copilot = buscar_noticias("Microsoft Copilot novidades produtividade")
 noticias_varejo = buscar_noticias("tecnologia inteligência artificial varejo moda")
@@ -85,8 +77,7 @@ noticias_varejo = buscar_noticias("tecnologia inteligência artificial varejo mo
 print("Montando o layout do e-mail...")
 corpo_html = montar_corpo_email(noticias_copilot, noticias_varejo)
 
-# --- CONFIGURAÇÃO DA API (COLE SEUS DADOS AQUI) ---
 URL_POWER_AUTOMATE = "https://default1ca382d5f1184c6d8411f8a0da31d5.3b.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4cd653bb903644a685a43d978ae4c3e0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=EF1oYQpnD8iSU8zrYwLbeKXLwdO83F4uElnwuXMhgfs" 
-EMAIL_DESTINO = "kaua.hiro@hrg3.com.br" # Seu e-mail para receber o teste
+EMAIL_DESTINO = "kaua.hiro@hrg3.com.br" 
 
 enviar_email_via_api(URL_POWER_AUTOMATE, EMAIL_DESTINO, "[Rascunho] Radar IA - Guess Brasil", corpo_html)
